@@ -1,0 +1,38 @@
+<?php
+
+
+class Database
+{
+    protected $servername;
+    protected $username;
+    protected $password;
+    protected $database;
+
+
+    public function __construct($servername, $username, $password, $database)
+    {
+        $this->servername = $servername;
+        $this->username = $username;
+        $this->password = $password;
+        $this->database = $database;
+    }
+
+
+    public function connect()
+    {
+        try {
+            $conn = new PDO(
+                "mysql:host=$this->servername;
+                dbname=$this->database",
+                $this->username,
+                $this->password
+            );
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // echo "Connected successfully";
+            return $conn;
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+}
